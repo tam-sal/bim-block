@@ -59,7 +59,6 @@ const getUserBlocks = async (req, res) => {
 
 // Update a block
 const updateUserBlock = async (req, res) => {
-  const { id } = req.params;
   let { startDate, endDate, progress } = req.body;
   progress = +progress;
 
@@ -74,9 +73,10 @@ const updateUserBlock = async (req, res) => {
   const datesError = validateDates(startDate, endDate);
   if (datesError) return res.status(400).json({ error: datesError });
   try {
+    const { id } = req.params;
     const block = await Block.findById(id);
     if (!block) return res.status(404).json({ error: error.message, message: 'Block does not exist' });
-    if (block.progress > progress) return res.status(404).json({ error: 'new progress value must be equal or greater than current one' });
+    if (block.progress > progress) return res.status(400).json({ error: 'new progress value must be equal or greater than current one' });
 
     // Update block fields
     block.startDate = startDate || block.startDate;

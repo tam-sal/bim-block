@@ -11,10 +11,11 @@ let _cors = {
   allowedHeaders: 'Content-Type,Authorization'
 };
 
+// Once the front is deployed - this is used
 const options = process.env.NODE_ENV === 'production' ? _cors.origin = process.env.front : _cors.origin;
 
 const middlewares = [
-  cors(options),
+  cors({ origin: true }),
   express.json(),
   cookieParser(),
   appRouter
