@@ -15,7 +15,11 @@ let _cors = {
 const options = process.env.NODE_ENV === 'production' ? _cors.origin = process.env.front : _cors.origin;
 
 const middlewares = [
-  cors({ origin: true }),
+  cors({
+    origin: true, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    allowedHeaders: 'Content-Type,Authorization'
+  }),
   express.json(),
   cookieParser(),
   appRouter
