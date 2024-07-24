@@ -12,7 +12,12 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     minlength: 8
-  }
+  },
+  blocks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Block',
+    default: []
+  }]
 },
   { timestamps: true }
 );

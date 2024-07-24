@@ -6,7 +6,9 @@ const BlockSchema = new Schema({
     type: String,
     required: true,
     trim: true,
-    maxlength: 40
+    maxlength: 40,
+    immutable: true,
+    unique: true
   },
   startDate: {
     type: Date,
