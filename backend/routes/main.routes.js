@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import gate from './gate.routes.js';
 import auth from './auth.routes.js';
+import block from './block.routes.js';
 
 const appRouter = Router();
 appRouter.use('/', gate);
 appRouter.use('/auth', auth);
+appRouter.use('/blocks', block);
 
 
 
