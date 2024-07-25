@@ -4,6 +4,7 @@ import appRouter from '../routes/main.routes.js';
 import cors from 'cors';
 
 
+
 let _cors = {
   origin: 'http://localhost:3001/',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
