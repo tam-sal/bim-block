@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: process.env.NODE_ENV === 'production' ? 'https://bimblocks-api.onrender.com' : 'http://localhost:3001',
+        url: process.env.NODE_ENV === 'production' ? process.env.productionAPI : 'http://localhost:' + process.env.DEV_PORT,
       },
     ],
 
