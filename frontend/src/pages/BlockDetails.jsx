@@ -9,7 +9,7 @@ const BlockDetails = () => {
     try {
       const block = await axios.put(`${baseURL}/blocks/${id}`)
       if (block.success) {
-        toast.success(block.toast);
+        toast.success(block.success);
       } else {
         toast.error(error.message)
       };
