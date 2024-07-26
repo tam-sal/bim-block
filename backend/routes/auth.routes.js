@@ -149,8 +149,8 @@ auth.get('/check-auth', protect, (req, res) => {
   try {
     return res.status(200).json({ authenticated: true, user: req.user })
   } catch (error) {
-    return res.status(403).json({ message: 'no credentials' })
+    return res.status(403).json({ authenticated: false, message: 'no credentials' })
   }
-})
+});
 
 export default auth;
