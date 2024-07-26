@@ -5,11 +5,15 @@ import axios from 'axios';
 import Loading from '../components/Loader/Loading';
 import { useNavigate } from 'react-router-dom';
 
-const CreateBlock = ({ edit, conSumbit }) => {
+const CreateBlock = ({ edit = false, conSumbit }) => {
 
 
-  const initial = { 'description': '', 'progress': '', 'startDate': '', 'endDate': '' };
-  const initialErr = { 'description': '', 'progress': '', 'startDate': '', 'endDate': '', isValid: false };
+  let initial = { 'progress': '', 'startDate': '', 'endDate': '' };
+  let initialErr = { 'progress': '', 'startDate': '', 'endDate': '', isValid: false };
+  if (edit === false) {
+    initial.description = '',
+      initialErr.decription = ''
+  }
   const baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_PROD_API : import.meta.env.VITE_DEV_API;
 
   const [form, setForm] = useState(initial);
@@ -103,6 +107,7 @@ const CreateBlock = ({ edit, conSumbit }) => {
   };
 
   const disableButton = !Object.values(form).every(Boolean) || !err.isValid || form.progress === null;
+
 
   return (
     <>
