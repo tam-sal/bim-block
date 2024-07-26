@@ -8,7 +8,9 @@ const BlockCard = ({ id, description, startDate, endDate, progress }) => {
 
   const deleteCard = async (id) => {
     try {
-      const { data: deleted } = await axios.delete(`${baseURL}/blocks/${id}`);
+      const { data: deleted } = await axios.delete(`${baseURL}/blocks/${id}`, {
+        withCredentials: true
+      });
       console.log(deleted);
       if (deleted.success) {
         toast.success(deleted.success)
