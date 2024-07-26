@@ -86,7 +86,8 @@ const logout = async (req, res) => {
       expires: new Date(0),
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      path: '/'
+      path: '/',
+      sameSite: 'None'
     });
     return res.status(200).json({ message: 'Successfully Logged Out' });
   } catch (error) {
