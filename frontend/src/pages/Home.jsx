@@ -1,14 +1,23 @@
 import React from 'react'
 import NavBar from '../components/NavBar/NavBar';
-import CreateBlock from './CreateBlock'
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+
+
 const Home = () => {
+
+  //const auth = useContext(AuthContext);
+
+
+
   return (
     <>
       <NavBar />
-      {/* <CreateBlock
-        edit={false}
 
-      /> */}
+
+
+
+
 
     </>
   )
