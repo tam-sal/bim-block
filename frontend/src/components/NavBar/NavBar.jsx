@@ -12,7 +12,7 @@ function NavBar() {
     try {
       const signout = await axios.post(`${baseurl}/auth/logout`, { withCredentials: true });
       if (signout) {
-        toast.success(signout.message)
+        toast.success("Sign out successful")
       }
     } catch (error) {
       toast.error(error.message);
