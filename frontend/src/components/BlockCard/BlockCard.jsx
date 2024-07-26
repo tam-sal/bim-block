@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import { MdDeleteSweep } from "react-icons/md";
 import axios from 'axios';
 import toast from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
 
 const BlockCard = ({ id, description, startDate, endDate, progress }) => {
   const baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_PROD_API : import.meta.env.VITE_DEV_API;
-
+  const navigate = useNavigate();
   const deleteCard = async (id) => {
     try {
       const { data: deleted } = await axios.delete(`${baseURL}/blocks/${id}`, {
@@ -13,7 +14,8 @@ const BlockCard = ({ id, description, startDate, endDate, progress }) => {
       });
       console.log(deleted);
       if (deleted.success) {
-        toast.success(deleted.success)
+        toast.success(deleted.success);
+        navigate('/');
       };
 
     } catch (error) {
@@ -36,7 +38,7 @@ const BlockCard = ({ id, description, startDate, endDate, progress }) => {
             Progress: {progress}
           </p>
         </div>
-        <div className='h-8 w-8 bg-red-500 hover:cursor-pointer' onClick={() => deleteCard(id)}>
+        <div className='h-8 w-8 hover:cursor-pointer' onClick={() => deleteCard(id)}>
           <MdDeleteSweep />
         </div>
 

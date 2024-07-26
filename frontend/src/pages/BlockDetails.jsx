@@ -1,8 +1,10 @@
 import React from 'react'
-
+import CreateBlock from './CreateBlock'
 const BlockDetails = () => {
   return (
-    <div>BlockDetails</div>
+    <>
+      <CreateBlock edit={true} />
+    </>
   )
 }
 
