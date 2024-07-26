@@ -1,6 +1,25 @@
 import { Link } from 'react-router-dom';
+import { MdDeleteSweep } from "react-icons/md";
+import axios from 'axios';
+import toast from "react-hot-toast";
 
 const BlockCard = ({ id, description, startDate, endDate, progress }) => {
+  const baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_PROD_API : import.meta.env.VITE_DEV_API;
+
+  const deleteCard = async (id) => {
+    try {
+      const { data: deleted } = await axios.delete(`${baseURL}/blocks/${id}`);
+      console.log(deleted);
+      if (deleted.success) {
+        toast.success(deleted.success)
+      };
+
+    } catch (error) {
+      toast.error(error.message || 'Error on Deletion');
+      console.log(error.message)
+    };
+
+  }
   return (
     <>
       <div
@@ -9,13 +28,17 @@ const BlockCard = ({ id, description, startDate, endDate, progress }) => {
         <div>
           <h1 class="text-[2em] font-medium">BLOCK</h1>
           <p class="text-[0.85em]">
-            Description: Complete testing1 project 5<br />
-            Start: 2024-05-05 <br />
-            End: 2024-09-06 <br />
-            Progress: 0
+            Description: {description}<br />
+            Start: {startDate} <br />
+            End: {endDate} <br />
+            Progress: {progress}
           </p>
         </div>
-        <Link to='/details/:id'>
+        <div className='h-8 w-8 bg-red-500 hover:cursor-pointer' onClick={() => deleteCard(id)}>
+          <MdDeleteSweep />
+        </div>
+
+        <Link to={`/details/${id}`} >
           <button
             class="h-fit w-fit px-[1em] py-[0.25em] border-[1px] rounded-full flex justify-center items-center gap-[0.5em] overflow-hidden group hover:translate-y-[0.125em] duration-200 backdrop-blur-[12px]"
           >

@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+const GlobalContext = createContext();
 
-const AuthContext = createContext();
-
-const AuthProvider = ({ children }) => {
+const GlobalProvider = ({ children }) => {
 
   const { VITE_NODE_ENV, VITE_PROD_API, VITE_DEV_API } = import.meta.env
 
@@ -13,18 +13,30 @@ const AuthProvider = ({ children }) => {
     authenticated: false,
     user: null
   });
+  const [blocks, setBlocks] = useState([]);
+
 
   useEffect(() => {
     const source = axios.CancelToken.source();
 
     const checkAuth = async () => {
       try {
-        const { data } = await axios.get(base_url + '/auth/check-auth');
-        if (data.authenticated) {
+        const { data: logged } = await axios.get(`${base_url}/auth/check-auth`, {
+          withCredentials: true,
+          cancelToken: source.token,
+        });
+        console.log('Auth check response:', logged);
+
+        if (logged.authenticated) {
           setAuth({
-            authenticated: data.authenticated,
-            user: data.user
+            authenticated: logged.authenticated,
+            user: logged.user
           })
+          const { data: blox } = await axios.get(`${base_url}/blocks`, {
+            withCredentials: true,
+            cancelToken: source.token,
+          });
+          setBlocks(blox?.blocks);
         } else {
           setAuth({
             authenticated: false,
@@ -32,10 +44,12 @@ const AuthProvider = ({ children }) => {
           })
         };
       } catch (error) {
+        toast.error(error.message)
         if (axios.isCancel(error)) {
           console.log('Request canceled:', error.message);
         } else {
           setAuth({ authenticated: false, user: null });
+          setBlocks(null);
         };
       };
     };
@@ -46,16 +60,15 @@ const AuthProvider = ({ children }) => {
 
     return () => {
       source.cancel('Rerquest canceled on unmount.');
-      setAuth(null);
     }
 
   }, []);
 
   return (
-    <AuthContext.Provider value={auth}>
+    <GlobalContext.Provider value={{ auth, blocks }}>
       {children}
-    </AuthContext.Provider>
+    </GlobalContext.Provider>
   )
 }
-export { AuthProvider, AuthContext };
+export { GlobalProvider, GlobalContext };
 

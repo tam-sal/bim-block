@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import NavBar from '../components/NavBar/NavBar';
 import { validateEmailFormat, validatePasswordFormat } from '../../utils/validations';
 import Loading from '../components/Loader/Loading';
@@ -15,7 +15,7 @@ const SignIn = () => {
   const [err, setErr] = useState(initialErr);
   const [loading, setLoading] = useState(false);
   const baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_PROD_API : import.meta.env.VITE_DEV_API;
-  const auth = useContext(AuthContext);
+
 
   const navigate = useNavigate();
 
