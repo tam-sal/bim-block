@@ -10,7 +10,7 @@ function NavBar() {
   const baseurl = VITE_NODE_ENV === 'production' ? VITE_PROD_API : VITE_DEV_API;
   const handleSignout = async () => {
     try {
-      const signout = await axios.post(`${baseurl}/auth/logout`, { withCredentials: true });
+      const signout = await axios.post(`${baseurl}/auth/logout`, {}, { withCredentials: true });
       if (signout) {
         toast.success("Sign out successful")
       }
