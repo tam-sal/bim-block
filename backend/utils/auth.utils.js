@@ -20,10 +20,23 @@ const generateTokenizedCookie = (userId, res) => {
 
     res.cookie('jwt', token, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      secure: true,
+      secure: NODE_ENV === 'production',
       httpOnly: true,
-      sameSite: 'None'
+      sameSite: 'None',
+      path: '/'
     });
+    console.log({
+      message: 'Cookie set',
+      token,
+      cookieOptions: {
+        maxAge: 15 * 24 * 60 * 60 * 1000,
+        secure: NODE_ENV === 'production',
+        httpOnly: true,
+        sameSite: 'None',
+        path: '/'
+      }
+    });
+
   } catch (error) {
     return res.status(500).json({ error: 'Generating jwt cookie failed - auth.utils ' + error.message })
   };

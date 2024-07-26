@@ -62,7 +62,7 @@ const login = async (req, res) => {
     message: 'Missing required field'
   });
   try {
-    const user = await User.findOne({ email }).select('-password');
+    const user = await User.findOne({ email });
     if (!user || !(await isValidPassword(password, user?.password))) return res.status(401).json({
       error: 'Unauthorized',
       message: 'Invalid email or password'
@@ -70,7 +70,7 @@ const login = async (req, res) => {
 
     generateTokenizedCookie(user._id, res);
 
-    return res.status(200).json({ success: `${email} logged in.`, user });
+    return res.status(200).json({ success: `${email} logged in.`, user: user.email });
 
   } catch (error) {
     return res.status(500).json({ error: error.message, message: 'Login failed - auth.controller' });
