@@ -1,7 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
 
 function NavBar() {
+  const { VITE_NODE_ENV, VITE_PROD_API, VITE_DEV_API } = import.meta.env;
+
+  const baseurl = VITE_NODE_ENV === 'production' ? VITE_PROD_API : VITE_DEV_API;
+  const handleSignout = async () => {
+    try {
+      const signout = await axios.post(`${baseurl}/auth/logout`, { withCredentials: true });
+      if (signout) {
+        toast.success(signout.message)
+      }
+    } catch (error) {
+      toast.error(error.message);
+
+    }
+  }
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -29,9 +46,12 @@ function NavBar() {
               <ul className="p-2">
                 <li><Link to="/signin">Sign In</Link></li>
                 <li><Link to='/register'>Sign Up</Link></li>
+                <li><Link to='/create-block'>Create Block</Link></li>
+                <li><Link to='/blocks'>Blocks</Link></li>
               </ul>
             </li>
             <li><a href='https://bimtrazer.com/' target='_blank' rel='noopener noreferrer'>Contact Us</a></li>
+            <li onClick={handleSignout}><Link to='/'>Sign Out</Link></li>
           </ul>
         </div>
         <Link to='/' className="btn btn-ghost text-xl bg-slate-500">
@@ -52,6 +72,7 @@ function NavBar() {
             </ul>
           </li>
           <li className='mx-3'><a href='https://bimtrazer.com/' target='_blank' rel='noopener noreferrer'>Contact Us</a></li>
+          <li className='min-w-24' onClick={handleSignout}><Link to='/'>Sign Out</Link></li>
         </ul>
       </div>
     </div>
