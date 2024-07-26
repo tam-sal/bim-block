@@ -12,7 +12,7 @@ const CreateBlock = ({ edit = false, conSumbit }) => {
   let initialErr = { 'progress': '', 'startDate': '', 'endDate': '', isValid: false };
   if (edit === false) {
     initial.description = '',
-      initialErr.decription = ''
+      initialErr.description = ''
   }
   const baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_PROD_API : import.meta.env.VITE_DEV_API;
 
