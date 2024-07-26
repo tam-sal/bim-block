@@ -44,7 +44,7 @@ const GlobalProvider = ({ children }) => {
           })
         };
       } catch (error) {
-        toast.error(error.message)
+        console.log(error.message)
         if (axios.isCancel(error)) {
           console.log('Request canceled:', error.message);
         } else {
