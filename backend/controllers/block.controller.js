@@ -29,7 +29,7 @@ const createBlock = async (req, res) => {
   let block, loggedUser;
 
   try {
-    block = await Block.findOne({ description });
+    block = await Block.findOne({ description: { $regex: new RegExp(`^${description}$`, 'i') } });
     if (block) return res.status(409).json({ error: 'Duplicate Block description' });
 
     block = new Block({ description, startDate, endDate, progress, user });
