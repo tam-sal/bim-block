@@ -5,15 +5,12 @@ import axios from 'axios';
 import Loading from '../components/Loader/Loading';
 import { useNavigate } from 'react-router-dom';
 
-const CreateBlock = ({ edit = false, conSumbit }) => {
+const CreateBlock = () => {
 
 
-  let initial = { 'progress': '', 'startDate': '', 'endDate': '' };
-  let initialErr = { 'progress': '', 'startDate': '', 'endDate': '', isValid: false };
-  if (edit === false) {
-    initial.description = '',
-      initialErr.description = ''
-  }
+  let initial = { 'description': '', 'progress': '', 'startDate': '', 'endDate': '' };
+  let initialErr = { 'description': '', 'progress': '', 'startDate': '', 'endDate': '', isValid: false };
+
   const baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_PROD_API : import.meta.env.VITE_DEV_API;
 
   const [form, setForm] = useState(initial);
@@ -120,10 +117,10 @@ const CreateBlock = ({ edit = false, conSumbit }) => {
           <div className="createBlock min-w-[35vw]">
 
             <h1 className='font-bold my-4 text-lg text-center'>
-              {edit ? 'Edit ' : 'Create '}
-              Your Block</h1>
-            <form onSubmit={edit ? conSumbit : handleSubmit} >
-              {!edit && <> <div className="badge badge-outline">Description</div>
+
+              Create Your Block</h1>
+            <form onSubmit={handleSubmit} >
+              <> <div className="badge badge-outline">Description</div>
                 <input
                   type="text"
                   placeholder="Enter Description"
@@ -133,7 +130,7 @@ const CreateBlock = ({ edit = false, conSumbit }) => {
                   onChange={handleFormChange} />
 
                 <p className='text-orange-500 h-6 mb-2'>{err.description}</p>
-              </>}
+              </>
 
               <div className="badge badge-outline">Progress</div>
               <input
@@ -168,8 +165,7 @@ const CreateBlock = ({ edit = false, conSumbit }) => {
                   disabled={disableButton}
                   className='btn btn-sm mt-2 border border-slate-700 w-32 disabled:border-slate-500 disabled:text-slate-400 cursor-pointer'
                   type="submit">
-                  {edit ? 'Update ' : 'Create '}
-                  Block
+                  Create Block
                 </button>
               </div>
 

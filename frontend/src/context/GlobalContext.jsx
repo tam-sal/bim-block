@@ -60,6 +60,8 @@ const GlobalProvider = ({ children }) => {
 
     return () => {
       source.cancel('Rerquest canceled on unmount.');
+      setBlocks([]);
+      setAuth({});
     }
 
   }, []);

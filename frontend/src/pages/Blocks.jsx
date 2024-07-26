@@ -10,15 +10,15 @@ const Blocks = () => {
 
   return (
     <><NavBar />
-
-      <div className="cards flex justify-center items-center h-[85vh] space-x-4">
+      <div className='text-center font-bold text-4xl mt-10'>My Blocks</div>
+      <div className="cards flex justify-center items-center h-[65vh] space-x-6 gap-4 flex-wrap flex-grow-2">
         {blocks?.length > 0 ?
           <>
-            <div className='text-center font-bold text-4xl'>My Blocks</div>
+
             {blocks.map((block) => {
               const { _id, description, startDate, endDate, progress } = block
               return (
-                <div>
+                <div key={_id}>
                   <BlockCard
                     key={_id}
                     description={description}
