@@ -47,6 +47,8 @@ function NavBar() {
             <ul className="menu dropdown-content bg-base-100 rounded-box mt-3 p-2 shadow min-w-24">
               <li className='min-w-24'><Link to="/signin">Sign In</Link></li>
               <li className='min-w-24'><Link to='/register'>Sign Up</Link></li>
+              <li className='min-w-24'><Link to='/create-block'>Create Block</Link></li>
+              <li className='min-w-24'><Link to='/blocks'>Blocks</Link></li>
             </ul>
           </li>
           <li className='mx-3'><a href='https://bimtrazer.com/' target='_blank' rel='noopener noreferrer'>Contact Us</a></li>
