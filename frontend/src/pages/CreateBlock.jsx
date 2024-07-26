@@ -5,7 +5,7 @@ import axios from 'axios';
 import Loading from '../components/Loader/Loading';
 import { useNavigate } from 'react-router-dom';
 
-const CreateBlock = ({ edit }) => {
+const CreateBlock = ({ edit, conSumbit }) => {
 
 
   const initial = { 'description': '', 'progress': '', 'startDate': '', 'endDate': '' };
@@ -117,7 +117,7 @@ const CreateBlock = ({ edit }) => {
             <h1 className='font-bold my-4 text-lg text-center'>
               {edit ? 'Edit ' : 'Create '}
               Your Block</h1>
-            <form onSubmit={handleSubmit} >
+            <form onSubmit={edit ? conSumbit : handleSubmit} >
               {!edit && <> <div className="badge badge-outline">Description</div>
                 <input
                   type="text"
