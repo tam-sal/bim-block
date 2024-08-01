@@ -90,10 +90,10 @@ const BlockDetails = () => {
       };
     } catch (error) {
       if (error.response) {
-        toast.error(error.response.data.message)
+        toast.error(error.response.data.error)
       }
       else {
-        toast.error(error.message);
+        toast.error(error);
       }
     } finally {
       setLoading(false);
