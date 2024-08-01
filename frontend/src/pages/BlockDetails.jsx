@@ -88,10 +88,15 @@ const BlockDetails = () => {
         toast.success(block.success);
         navigate('/blocks');
       } else {
-        toast.error(block.message)
+        toast.error(block.error.message)
       };
     } catch (error) {
-      console.log(error.message);
+      if (error.response) {
+        toast.error(error.response.data.message)
+      }
+      else {
+        toast.error(error.message);
+      }
     } finally {
       setLoading(false);
     }
