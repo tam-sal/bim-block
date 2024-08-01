@@ -20,21 +20,10 @@ const generateTokenizedCookie = (userId, res) => {
 
     res.cookie('jwt', token, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      secure: NODE_ENV === 'production',
+      secure: true,
       httpOnly: true,
       sameSite: 'None',
       path: '/'
-    });
-    console.log({
-      message: 'Cookie set',
-      token,
-      cookieOptions: {
-        maxAge: 15 * 24 * 60 * 60 * 1000,
-        secure: true,
-        httpOnly: true,
-        sameSite: 'None',
-        path: '/'
-      }
     });
 
   } catch (error) {

@@ -85,7 +85,7 @@ const logout = async (req, res) => {
       maxAge: 0,
       expires: new Date(0),
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       path: '/',
       sameSite: 'None'
     });
