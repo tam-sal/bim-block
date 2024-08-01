@@ -2,15 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useContext } from 'react';
+import { GlobalContext } from '../../context/GlobalContext';
 
 
 function NavBar() {
   const { VITE_NODE_ENV, VITE_PROD_API, VITE_DEV_API } = import.meta.env;
+  const { setAuth } = useContext(GlobalContext);
 
   const baseurl = VITE_NODE_ENV === 'production' ? VITE_PROD_API : VITE_DEV_API;
   const handleSignout = async () => {
     try {
       const signout = await axios.post(`${baseurl}/auth/logout`, {}, { withCredentials: true });
+      await setAuth({ authenticated: false })
       if (signout) {
         toast.success("Sign out successful")
       }

@@ -5,7 +5,8 @@ import Loading from '../components/Loader/Loading';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
-
+import { useContext } from 'react';
+import { GlobalContext } from '../context/GlobalContext';
 
 const SignIn = () => {
 
@@ -15,6 +16,8 @@ const SignIn = () => {
   const [err, setErr] = useState(initialErr);
   const [loading, setLoading] = useState(false);
   const baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_PROD_API : import.meta.env.VITE_DEV_API;
+  const { auth, setAuth } = useContext(GlobalContext);
+
 
 
   const navigate = useNavigate();
@@ -57,13 +60,15 @@ const SignIn = () => {
     setLoading(true);
     try {
       const { data: user } = await axios.post(`${baseURL}/auth/login`, form, { withCredentials: true });
+      setAuth({ ...auth, authenticated: true })
+
       toast.success('Logged In Successfully!')
       setForm(initialForm);
       navigate('/blocks')
       return user;
     } catch (error) {
       if (error.response) {
-        toast.error(error.response.data.error);
+        toast.error(error.response.data.message);
 
       } else {
         toast.error('An error occurred.');
@@ -72,6 +77,8 @@ const SignIn = () => {
       setLoading(false);
     }
   }
+
+
 
   const disableButton = !Object.values(form).every(Boolean) || !err.isValid
   return (

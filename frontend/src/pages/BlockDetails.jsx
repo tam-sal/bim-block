@@ -78,6 +78,7 @@ const BlockDetails = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const { data: block } = await axios.put(`${baseURL}/blocks/${id}`, form, {
@@ -91,6 +92,8 @@ const BlockDetails = () => {
       };
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 

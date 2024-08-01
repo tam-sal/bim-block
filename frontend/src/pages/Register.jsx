@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loading from "../components/Loader/Loading.jsx";
 import axios from 'axios';
+import { useContext } from "react";
+import { GlobalContext } from "../context/GlobalContext.jsx";
 
 const Register = () => {
 
@@ -14,6 +16,7 @@ const Register = () => {
   const [err, setErr] = useState(initialErr);
   const [loading, setLoading] = useState(false);
   const baseURL = import.meta.env.NODE_ENV === 'production' ? import.meta.env.VITE_PROD_API : import.meta.env.VITE_DEV_API;
+  const { auth, setAuth } = useContext(GlobalContext);
 
   const navigate = useNavigate();
 
@@ -66,6 +69,7 @@ const Register = () => {
     setLoading(true);
     try {
       const { data: user } = await axios.post(`${baseURL}/auth/register`, form, { withCredentials: true });
+      setAuth({ ...auth, authenticated: true })
       toast.success('Registration Successful!')
       setForm(initialForm);
       navigate('/')
@@ -73,7 +77,7 @@ const Register = () => {
 
     } catch (error) {
       if (error.response) {
-        toast.error(error.response.data.error);
+        toast.error(error.response.data.message);
 
       } else {
         toast.error('An error occurred.');

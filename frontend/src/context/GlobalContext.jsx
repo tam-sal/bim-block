@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import toast from 'react-hot-toast';
-const GlobalContext = createContext();
 
+
+const GlobalContext = createContext();
 const GlobalProvider = ({ children }) => {
 
   const { VITE_NODE_ENV, VITE_PROD_API, VITE_DEV_API } = import.meta.env
@@ -13,61 +13,38 @@ const GlobalProvider = ({ children }) => {
     authenticated: false,
     user: null
   });
-  const [blocks, setBlocks] = useState([]);
-
 
   useEffect(() => {
     const source = axios.CancelToken.source();
 
-    const checkAuth = async () => {
-      try {
-        const { data: logged } = await axios.get(`${base_url}/auth/check-auth`, {
-          withCredentials: true,
-          cancelToken: source.token,
-        });
-        console.log('Auth check response:', logged);
-
-        if (logged.authenticated) {
-          setAuth({
-            authenticated: logged.authenticated,
-            user: logged.user
-          })
-          const { data: blox } = await axios.get(`${base_url}/blocks`, {
-            withCredentials: true,
-            cancelToken: source.token,
-          });
-          setBlocks(blox?.blocks);
-        } else {
-          setAuth({
-            authenticated: false,
-            user: null
-          })
-        };
-      } catch (error) {
-        console.log(error.message)
-        if (axios.isCancel(error)) {
-          console.log('Request canceled:', error.message);
-        } else {
-          setAuth({ authenticated: false, user: null });
-          setBlocks(null);
-        };
-      };
-    };
-
-
-    checkAuth();
-
-
-    return () => {
-      source.cancel('Rerquest canceled on unmount.');
-      setBlocks([]);
-      setAuth({});
+    const getAuth = async () => {
+      const { data } = await axios.get(`${base_url}/auth/check-auth`, {
+        withCredentials: true
+      });
+      if (data.authenticated) {
+        const { authenticated, user } = data;
+        setAuth({ authenticated, user })
+      }
     }
 
-  }, []);
+    getAuth();
+    const handleBeforeUnload = async () => {
+      setAuth({ authenticated: false, user: null });
+      await axios.post(`${base_url}/auth/logout`, {}, { withCredentials: true });
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      source.cancel('Rerquest AUTH canceled on unmount.');
+      setAuth({});
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
+
+  }, [base_url]);
+
 
   return (
-    <GlobalContext.Provider value={{ auth, blocks }}>
+    <GlobalContext.Provider value={{ auth, setAuth }}>
       {children}
     </GlobalContext.Provider>
   )

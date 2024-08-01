@@ -97,8 +97,14 @@ const CreateBlock = () => {
         navigate('/blocks');
       }
     } catch (error) {
-      toast.error(error.message);
-    } finally {
+      if (error.response) {
+        toast.error(error.response.data.message)
+      }
+      else {
+        toast.error(error.message);
+      }
+    }
+    finally {
       setLoading(false);
     };
   };
