@@ -25,7 +25,7 @@ function NavBar() {
   }
   return (
     <div className="navbar bg-base-100">
-      <div className="navbar-start">
+      <div className="navbar-start max-w-[38vw]">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -63,7 +63,7 @@ function NavBar() {
           &#385;im&#385;loX
         </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-cente hidden sm:flex">
         <ul className="menu menu-horizontal px-1">
           <li className='mx-3'><Link to='/'>Home</Link></li>
           <li className='mx-3 dropdown dropdown-hover'>
