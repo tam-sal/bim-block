@@ -87,8 +87,6 @@ const BlockDetails = () => {
       if (block.success) {
         toast.success(block.success);
         navigate('/blocks');
-      } else {
-        toast.error(block.error.message)
       };
     } catch (error) {
       if (error.response) {
